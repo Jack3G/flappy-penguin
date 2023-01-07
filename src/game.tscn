@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhdvdr6gf0tn8"]
+
+[ext_resource type="Script" path="res://src/game.gd" id="1_bid2k"]
+[ext_resource type="PackedScene" uid="uid://dwxm8auvl2sbp" path="res://src/bord.tscn" id="2_84ag3"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_bid2k")
+
+[node name="Bord" parent="." instance=ExtResource("2_84ag3")]
+position = Vector2(115, 41)

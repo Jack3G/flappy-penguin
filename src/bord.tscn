@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwxm8auvl2sbp"]
+
+[ext_resource type="Texture2D" uid="uid://cw2525i8vgpxu" path="res://assets/penguino.png" id="1_3wjsv"]
+[ext_resource type="Script" path="res://src/bord.gd" id="1_fddyq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxd4q"]
+atlas = ExtResource("1_3wjsv")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f70um"]
+atlas = ExtResource("1_3wjsv")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knp74"]
+animations = [{
+"frames": [SubResource("AtlasTexture_wxd4q"), SubResource("AtlasTexture_f70um")],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tc3fi"]
+radius = 4.0
+height = 10.0
+
+[node name="Bord" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_fddyq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+frames = SubResource("SpriteFrames_knp74")
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_tc3fi")
