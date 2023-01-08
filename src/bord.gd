@@ -10,6 +10,9 @@ extends CharacterBody2D
 @onready var sprite: Node2D = $AnimatedSprite2D
 
 
+signal died
+
+
 func get_gravity() -> Vector2:
 	return ProjectSettings.get_setting("physics/2d/default_gravity") *\
 		ProjectSettings.get_setting("physics/2d/default_gravity_vector")
@@ -34,4 +37,4 @@ func _physics_process(delta: float) -> void:
 	var had_collision = move_and_slide()
 	
 	if had_collision:
-		print("you ded")
+		emit_signal("died")
