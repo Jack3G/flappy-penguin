@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwxm8auvl2sbp"]
+[gd_scene load_steps=12 format=3 uid="uid://dwxm8auvl2sbp"]
 
 [ext_resource type="Texture2D" uid="uid://cw2525i8vgpxu" path="res://assets/penguino.png" id="1_3wjsv"]
 [ext_resource type="Script" path="res://src/bord.gd" id="1_fddyq"]
@@ -23,6 +23,34 @@ animations = [{
 radius = 4.0
 height = 10.0
 
+[sub_resource type="Gradient" id="Gradient_6yso6"]
+offsets = PackedFloat32Array(0.194805, 1)
+colors = PackedColorArray(0.95, 0.633333, 0, 1, 0.87, 0.16878, 0.0609, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ul4vt"]
+gradient = SubResource("Gradient_6yso6")
+width = 8
+
+[sub_resource type="Gradient" id="Gradient_xexil"]
+offsets = PackedFloat32Array(0.61039, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_avhi2"]
+gradient = SubResource("Gradient_xexil")
+width = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dd8yx"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 15.0
+gravity = Vector3(0, 5, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 70.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_avhi2")
+color_initial_ramp = SubResource("GradientTexture1D_ul4vt")
+
 [node name="Bord" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_fddyq")
@@ -34,3 +62,9 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_tc3fi")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-5, -6)
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_dd8yx")
+lifetime = 0.5
