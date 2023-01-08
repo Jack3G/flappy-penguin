@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk4gv3j87fjon"]
+
+[ext_resource type="Texture2D" uid="uid://ci23vpanlcu4i" path="res://assets/stalactite.png" id="1_s72sb"]
+
+[node name="Stalactite" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -90)
+texture = ExtResource("1_s72sb")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1, -4, -4, -30, -4, -42, -13, -115, -15, -180, 15, -180, 11, -99, 8, -77, 4, -38)
