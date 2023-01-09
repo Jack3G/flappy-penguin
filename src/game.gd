@@ -15,13 +15,17 @@ extends Node2D
 # to make sure it doesn't spawn on screen spawn it a bit further
 @export var hazard_spawn_offset: float = 3
 
+@export var distance_label_prefix: String = "Distance: "
+
 var distance: float = 0
 var hazards: Array[Hazard] = []
 var next_hazard_distance: float = randf_range(
 	hazard_distance_min, hazard_distance_max)
 
-var stalactite: PackedScene = preload("res://src/hazards/stalactite.tscn")
-var stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
+const stalactite: PackedScene = preload("res://src/hazards/stalactite.tscn")
+const stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
+
+@onready var distance_label: Label = %DistanceLabel
 
 
 class Hazard:
@@ -72,6 +76,8 @@ func _physics_process(delta: float) -> void:
 		distance += -scroll_speed * delta
 	else:
 		distance += scroll_speed * delta
+	
+	distance_label.text = distance_label_prefix + str(roundi(distance))
 	
 	$ParallaxBackground.scroll_offset.x = -distance * pixels_per_meter
 	

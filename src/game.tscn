@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhdvdr6gf0tn8"]
+[gd_scene load_steps=9 format=3 uid="uid://bhdvdr6gf0tn8"]
 
 [ext_resource type="Script" path="res://src/game.gd" id="1_bid2k"]
 [ext_resource type="PackedScene" uid="uid://dwxm8auvl2sbp" path="res://src/bord.tscn" id="2_84ag3"]
 [ext_resource type="Texture2D" uid="uid://c4cst5levxwpl" path="res://assets/cave_background.png" id="3_hdlq8"]
 [ext_resource type="Texture2D" uid="uid://cgwdggqjd6svs" path="res://assets/cave_background_far.png" id="4_h6a7y"]
+[ext_resource type="Theme" uid="uid://df18fg2eaif77" path="res://src/theme.tres" id="5_ybfte"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xn80b"]
 atlas = ExtResource("4_h6a7y")
@@ -33,7 +34,7 @@ position = Vector2(115, 41)
 [node name="BGFar" type="ParallaxLayer" parent="ParallaxBackground"]
 modulate = Color(0.686275, 0.686275, 0.686275, 1)
 texture_filter = 1
-motion_scale = Vector2(0.8, 0.8)
+motion_scale = Vector2(0.6, 0.6)
 motion_mirroring = Vector2(440, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/BGFar"]
@@ -44,9 +45,31 @@ centered = false
 
 [node name="BGNear" type="ParallaxLayer" parent="ParallaxBackground"]
 texture_filter = 1
+motion_scale = Vector2(0.8, 0.8)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground/BGNear"]
 scale = Vector2(2, 2)
 texture = ExtResource("3_hdlq8")
 centered = false
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Base" type="Control" parent="UI"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_ybfte")
+
+[node name="DistanceLabel" type="Label" parent="UI/Base"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 72.0
+offset_bottom = 28.0
+text = "Distance: 1213"
