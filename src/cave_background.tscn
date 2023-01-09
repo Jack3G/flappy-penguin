@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://dklux7i1dt3xk"]
+
+[ext_resource type="Texture2D" uid="uid://cgwdggqjd6svs" path="res://assets/cave_background_far.png" id="1_dhstr"]
+[ext_resource type="Texture2D" uid="uid://c4cst5levxwpl" path="res://assets/cave_background.png" id="2_qiu0t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xn80b"]
+atlas = ExtResource("1_dhstr")
+region = Rect2(0, 0, 220, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th5ff"]
+atlas = ExtResource("1_dhstr")
+region = Rect2(0, 90, 220, 90)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xt75r"]
+animations = [{
+"frames": [SubResource("AtlasTexture_xn80b"), SubResource("AtlasTexture_th5ff")],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="CaveBackground" type="ParallaxBackground"]
+
+[node name="BGFar" type="ParallaxLayer" parent="."]
+modulate = Color(0.686275, 0.686275, 0.686275, 1)
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(440, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BGFar"]
+scale = Vector2(2, 2)
+frames = SubResource("SpriteFrames_xt75r")
+playing = true
+centered = false
+
+[node name="BGNear" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background" type="Sprite2D" parent="BGNear"]
+scale = Vector2(2, 2)
+texture = ExtResource("2_qiu0t")
+centered = false
