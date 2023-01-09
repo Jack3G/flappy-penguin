@@ -72,5 +72,17 @@ func _process(delta: float) -> void:
 	if hazards.is_empty():
 		spawn_new_hazard_pair()
 	
-	for h in hazards:
+	# I have to be able to change i inside the loop for when stuff gets deleted
+	# so that elements dont get skipped
+	var i: int = 0
+	while i < hazards.size():
+		var h = hazards[i]
 		h.update_pixel_position(distance, pixels_per_meter)
+		
+		if h.get_pixel_position() + hazard_spawn_offset*pixels_per_meter < 0:
+			h.bottom.queue_free()
+			h.top.queue_free()
+			hazards.remove_at(i)
+			i -= 1
+		
+		i += 1
