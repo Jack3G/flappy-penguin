@@ -30,23 +30,23 @@ position = Vector2(115, 41)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="BGFar" type="ParallaxLayer" parent="ParallaxBackground"]
 modulate = Color(0.686275, 0.686275, 0.686275, 1)
 texture_filter = 1
 motion_scale = Vector2(0.8, 0.8)
 motion_mirroring = Vector2(440, 0)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParallaxBackground/BGFar"]
 scale = Vector2(2, 2)
 frames = SubResource("SpriteFrames_xt75r")
 playing = true
 centered = false
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="BGNear" type="ParallaxLayer" parent="ParallaxBackground"]
 texture_filter = 1
 motion_mirroring = Vector2(640, 0)
 
-[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Background" type="Sprite2D" parent="ParallaxBackground/BGNear"]
 scale = Vector2(2, 2)
 texture = ExtResource("3_hdlq8")
 centered = false
