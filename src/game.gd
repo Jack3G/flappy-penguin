@@ -43,8 +43,9 @@ class Hazard:
 func spawn_new_hazard_pair() -> void:
 	var new_hazard: Hazard = Hazard.new()
 	
-	var half_gap = randi_range(hazard_gap_min, hazard_gap_max)/2
-	var gap_center = randi_range(
+	# dividing the ints is ok, I want them to snap to whole numbers
+	var half_gap: int = randi_range(hazard_gap_min, hazard_gap_max)/2
+	var gap_center: int = randi_range(
 		0 + half_gap,
 		get_viewport_rect().size.y - half_gap,
 	)
