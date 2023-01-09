@@ -7,6 +7,9 @@ extends CharacterBody2D
 @export var max_angle: float = 0.5
 @export var min_angle: float = -0.5
 
+# how many pixels he can be off screen before dying
+@export var off_screen_zone: float = 20
+
 @onready var sprite: Node2D = $AnimatedSprite2D
 
 var dead: bool = false
@@ -46,7 +49,10 @@ func _physics_process(delta: float) -> void:
 		
 		var had_collision = move_and_slide()
 		
-		if had_collision and not dead:
+		if (had_collision or
+				self.position.y < -off_screen_zone or
+				self.position.y > get_viewport_rect().size.y + off_screen_zone
+				) and not dead:
 			dead = true
 			jetpack_particles.emitting = false
 			emit_signal("died")
