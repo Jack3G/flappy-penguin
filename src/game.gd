@@ -8,8 +8,8 @@ extends Node2D
 @export var scroll_speed: float = 5
 @export var pixels_per_meter: float = 15
 
-@export var hazard_distance_min: float = 3
-@export var hazard_distance_max: float = 5
+@export var hazard_distance_min: float = 6
+@export var hazard_distance_max: float = 8
 @export var hazard_gap_min: int = 40
 @export var hazard_gap_max: int = 70
 # to make sure it doesn't spawn on screen spawn it a bit further
@@ -89,7 +89,8 @@ func _physics_process(delta: float) -> void:
 	
 	var spawn_new_hazard: bool = hazards.is_empty() or (
 		last_hazard_to_screen_left_distance and (viewport_meter_width -
-			last_hazard_to_screen_left_distance + 0) > next_hazard_distance)
+			last_hazard_to_screen_left_distance + hazard_spawn_offset
+			) > next_hazard_distance)
 	
 	if spawn_new_hazard:
 		spawn_new_hazard_pair()
