@@ -31,7 +31,6 @@ outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Game" type="Node2D"]
-texture_filter = 1
 script = ExtResource("1_bid2k")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -61,7 +60,6 @@ centered = false
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Base" type="Control" parent="UI"]
-texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

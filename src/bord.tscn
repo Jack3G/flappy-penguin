@@ -52,7 +52,6 @@ color_ramp = SubResource("GradientTexture1D_avhi2")
 color_initial_ramp = SubResource("GradientTexture1D_ul4vt")
 
 [node name="Bord" type="CharacterBody2D"]
-texture_filter = 1
 script = ExtResource("1_fddyq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
