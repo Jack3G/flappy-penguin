@@ -21,6 +21,7 @@ extends Node2D
 @export var distance_label_prefix: String = "Distance: "
 @export var high_score_label_prefix: String = "High-Score: "
 @export var high_score_default: float = 100
+@export_file var save_file: String = "user://save.ini"
 
 @export var death_screen_time: float = 3
 
@@ -87,7 +88,7 @@ func load_high_score() -> float:
 	var new_high_score: float = high_score_default
 	
 	var file = ConfigFile.new()
-	var err = file.load("user://save.ini")
+	var err = file.load(save_file)
 	if err != OK:
 		print("Couldn't load the save file. Using defaults.")
 		return new_high_score
@@ -95,6 +96,17 @@ func load_high_score() -> float:
 	new_high_score = file.get_value("game", "high_score", high_score_default)
 	
 	return new_high_score
+
+func save_high_score(high_score: float) -> void:
+	var file = ConfigFile.new()
+	
+	# It doesn't matter if we can't load it
+	file.load(save_file)
+	
+	file.set_value("game", "high_score", high_score)
+	var err = file.save(save_file)
+	if err != OK:
+		print("Couldn't save file (" + save_file + "). error code: " + err)
 
 
 func _on_player_unfrozen() -> void:
@@ -125,6 +137,8 @@ func _on_player_died() -> void:
 	get_tree().create_timer(death_screen_time).timeout.connect(
 		func _on_death_screen_timeout():
 			respawn())
+	
+	save_high_score(high_score)
 
 
 func _ready() -> void:
