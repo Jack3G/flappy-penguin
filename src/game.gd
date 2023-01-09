@@ -8,8 +8,8 @@ extends Node2D
 @export var scroll_speed: float = 5
 @export var pixels_per_meter: float = 15
 
-@export var hazard_distance_min: float = 4
-@export var hazard_distance_max: float = 6
+@export var hazard_distance_min: float = 3
+@export var hazard_distance_max: float = 5
 @export var hazard_gap_min: int = 40
 @export var hazard_gap_max: int = 70
 # to make sure it doesn't spawn on screen spawn it a bit further
@@ -17,6 +17,8 @@ extends Node2D
 
 var distance: float = 0
 var hazards: Array[Hazard] = []
+var next_hazard_distance: float = randf_range(
+	hazard_distance_min, hazard_distance_max)
 
 var stalactite: PackedScene = preload("res://src/hazards/stalactite.tscn")
 var stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
@@ -65,12 +67,27 @@ func spawn_new_hazard_pair() -> void:
 
 
 func _process(delta: float) -> void:
-	distance += scroll_speed * delta
+	if Input.is_key_pressed(KEY_0):
+		distance += -scroll_speed * delta
+	else:
+		distance += scroll_speed * delta
 	
 	$ParallaxBackground.scroll_offset.x = -distance * pixels_per_meter
 	
-	if hazards.is_empty():
+	
+	var viewport_meter_width = get_viewport_rect().size.x / pixels_per_meter
+	var last_hazard_to_screen_left_distance
+	if not hazards.is_empty():
+		last_hazard_to_screen_left_distance = hazards.back().position - distance
+	
+	var spawn_new_hazard: bool = hazards.is_empty() or (
+		last_hazard_to_screen_left_distance and (viewport_meter_width -
+			last_hazard_to_screen_left_distance + 0) > next_hazard_distance)
+	
+	if spawn_new_hazard:
 		spawn_new_hazard_pair()
+		next_hazard_distance = randf_range(
+			hazard_distance_min, hazard_distance_max)
 	
 	# I have to be able to change i inside the loop for when stuff gets deleted
 	# so that elements dont get skipped
