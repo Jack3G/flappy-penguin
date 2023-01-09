@@ -67,7 +67,7 @@ func spawn_new_hazard_pair() -> void:
 	self.add_child(new_hazard.bottom)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_0):
 		distance += -scroll_speed * delta
 	else:
