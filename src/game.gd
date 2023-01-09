@@ -16,8 +16,12 @@ extends Node2D
 @export var hazard_spawn_offset: float = 3
 
 @export var distance_label_prefix: String = "Distance: "
+@export var high_score_label_prefix: String = "High-Score: "
+@export var high_score_default: float = 100
 
 var distance: float = 0
+var high_score: float = high_score_default
+
 var hazards: Array[Hazard] = []
 var next_hazard_distance: float = randf_range(
 	hazard_distance_min, hazard_distance_max)
@@ -26,6 +30,7 @@ const stalactite: PackedScene = preload("res://src/hazards/stalactite.tscn")
 const stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
 
 @onready var distance_label: Label = %DistanceLabel
+@onready var high_score_label: Label = %HighScoreLabel
 
 
 class Hazard:
@@ -71,13 +76,35 @@ func spawn_new_hazard_pair() -> void:
 	self.add_child(new_hazard.bottom)
 
 
+func load_high_score() -> float:
+	var new_high_score: float = high_score_default
+	
+	var file = ConfigFile.new()
+	var err = file.load("user://save.ini")
+	if err != OK:
+		print("Couldn't load the save file. Using defaults.")
+		return new_high_score
+	
+	new_high_score = file.get_value("game", "high_score", high_score_default)
+	
+	return new_high_score
+
+
+func _ready() -> void:
+	high_score = load_high_score()
+
+
 func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_0):
 		distance += -scroll_speed * delta
 	else:
 		distance += scroll_speed * delta
 	
+	if distance > high_score:
+		high_score = distance
+	
 	distance_label.text = distance_label_prefix + str(roundi(distance))
+	high_score_label.text = high_score_label_prefix + str(roundi(high_score))
 	
 	$ParallaxBackground.scroll_offset.x = -distance * pixels_per_meter
 	
