@@ -10,8 +10,8 @@ extends Node2D
 
 @export var hazard_distance_min: float = 4
 @export var hazard_distance_max: float = 6
-@export var hazard_gap_min: int = 100
-@export var hazard_gap_max: int = 200
+@export var hazard_gap_min: int = 40
+@export var hazard_gap_max: int = 70
 # to make sure it doesn't spawn on screen spawn it a bit further
 @export var hazard_spawn_offset: float = 3
 
@@ -41,7 +41,7 @@ class Hazard:
 func spawn_new_hazard_pair() -> void:
 	var new_hazard: Hazard = Hazard.new()
 	
-	var half_gap = randi_range(hazard_gap_min, hazard_distance_max)/2
+	var half_gap = randi_range(hazard_gap_min, hazard_gap_max)/2
 	var gap_center = randi_range(
 		0 + half_gap,
 		get_viewport_rect().size.y - half_gap,
@@ -56,7 +56,7 @@ func spawn_new_hazard_pair() -> void:
 	new_hazard.bottom = bottom
 	
 	new_hazard.position = get_viewport_rect().size.x / pixels_per_meter\
-		+ hazard_spawn_offset
+		+ hazard_spawn_offset + distance
 	new_hazard.update_pixel_position(distance, pixels_per_meter)
 	
 	hazards.append(new_hazard)

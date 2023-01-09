@@ -25,6 +25,7 @@ func _physics_process(delta: float) -> void:
 	velocity += get_gravity() * delta
 	
 	velocity.y = clampf(velocity.y, -terminal_velocity, terminal_velocity)
+	velocity.x = 0 # just in case
 	
 	var turn_fraction: float = clampf(
 		(velocity.y + flap_strength)/(flap_strength * 2),
