@@ -27,7 +27,7 @@ extends Node2D
 var distance: float = 0
 var high_score: float = high_score_default
 var player: Node2D
-var continue_moving: bool = true
+var continue_moving: bool = false
 
 var hazards: Array[Hazard] = []
 var next_hazard_distance: float = randf_range(
@@ -97,6 +97,10 @@ func load_high_score() -> float:
 	return new_high_score
 
 
+func _on_player_unfrozen() -> void:
+	continue_moving = true
+
+
 func respawn() -> void:
 	if player and not player.is_queued_for_deletion():
 		player.queue_free()
@@ -110,9 +114,10 @@ func respawn() -> void:
 	player = preload("res://src/bord.tscn").instantiate()
 	player.position = player_pixel_position_default
 	player.died.connect(_on_player_died)
+	player.unfrozen.connect(_on_player_unfrozen)
 	self.add_child(player)
 	
-	continue_moving = true
+	continue_moving = false
 
 
 func _on_player_died() -> void:

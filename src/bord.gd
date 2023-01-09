@@ -10,10 +10,12 @@ extends CharacterBody2D
 @onready var sprite: Node2D = $AnimatedSprite2D
 
 var dead: bool = false
+var frozen: bool = true
 
 @onready var jetpack_particles: GPUParticles2D = $JetpackParticles
 
 signal died
+signal unfrozen
 
 
 func get_gravity() -> Vector2:
@@ -24,23 +26,27 @@ func get_gravity() -> Vector2:
 func _physics_process(delta: float) -> void:
 	if not dead and Input.is_action_just_pressed("flap"):
 		velocity.y = -flap_strength
+		if frozen:
+			frozen = false
+			emit_signal("unfrozen")
 	
-	velocity += get_gravity() * delta
-	
-	velocity.y = clampf(velocity.y, -terminal_velocity, terminal_velocity)
-	velocity.x = 0 # just in case
-	
-	var turn_fraction: float = clampf(
-		(velocity.y + flap_strength)/(flap_strength * 2),
-		0,
-		1,
-	)
-	
-	sprite.rotation = lerp(min_angle, max_angle, turn_fraction)
-	
-	var had_collision = move_and_slide()
-	
-	if had_collision and not dead:
-		dead = true
-		jetpack_particles.emitting = false
-		emit_signal("died")
+	if not frozen:
+		velocity += get_gravity() * delta
+		
+		velocity.y = clampf(velocity.y, -terminal_velocity, terminal_velocity)
+		velocity.x = 0 # just in case
+		
+		var turn_fraction: float = clampf(
+			(velocity.y + flap_strength)/(flap_strength * 2),
+			0,
+			1,
+		)
+		
+		sprite.rotation = lerp(min_angle, max_angle, turn_fraction)
+		
+		var had_collision = move_and_slide()
+		
+		if had_collision and not dead:
+			dead = true
+			jetpack_particles.emitting = false
+			emit_signal("died")
