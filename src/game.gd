@@ -39,6 +39,7 @@ const stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
 
 @onready var distance_label: Label = %DistanceLabel
 @onready var high_score_label: Label = %HighScoreLabel
+@onready var cave_background: ParallaxBackground = $CaveBackground
 
 
 class Hazard:
@@ -157,7 +158,7 @@ func _physics_process(delta: float) -> void:
 	distance_label.text = distance_label_prefix + str(roundi(distance))
 	high_score_label.text = high_score_label_prefix + str(roundi(high_score))
 	
-	$ParallaxBackground.scroll_offset.x = -distance * pixels_per_meter
+	cave_background.scroll_offset.x = -distance * pixels_per_meter
 	
 	
 	var viewport_meter_width = get_viewport_rect().size.x / pixels_per_meter
