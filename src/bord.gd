@@ -9,6 +9,9 @@ extends CharacterBody2D
 
 @onready var sprite: Node2D = $AnimatedSprite2D
 
+var dead: bool = false
+
+@onready var jetpack_particles: GPUParticles2D = $JetpackParticles
 
 signal died
 
@@ -19,7 +22,7 @@ func get_gravity() -> Vector2:
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("flap"):
+	if not dead and Input.is_action_just_pressed("flap"):
 		velocity.y = -flap_strength
 	
 	velocity += get_gravity() * delta
@@ -37,5 +40,7 @@ func _physics_process(delta: float) -> void:
 	
 	var had_collision = move_and_slide()
 	
-	if had_collision:
+	if had_collision and not dead:
+		dead = true
+		jetpack_particles.emitting = false
 		emit_signal("died")

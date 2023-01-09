@@ -7,6 +7,9 @@ extends Node2D
 
 @export var scroll_speed: float = 5
 @export var pixels_per_meter: float = 15
+@export var player_pixel_position_default: Vector2 = Vector2(
+	110,
+	ProjectSettings.get_setting("display/window/size/viewport_height") * 0.25)
 
 @export var hazard_distance_min: float = 6
 @export var hazard_distance_max: float = 8
@@ -19,8 +22,12 @@ extends Node2D
 @export var high_score_label_prefix: String = "High-Score: "
 @export var high_score_default: float = 100
 
+@export var death_screen_time: float = 3
+
 var distance: float = 0
 var high_score: float = high_score_default
+var player: Node2D
+var continue_moving: bool = true
 
 var hazards: Array[Hazard] = []
 var next_hazard_distance: float = randf_range(
@@ -90,14 +97,39 @@ func load_high_score() -> float:
 	return new_high_score
 
 
+func respawn() -> void:
+	if player and not player.is_queued_for_deletion():
+		player.queue_free()
+	
+	distance = 0
+	for h in hazards:
+		h.top.free()
+		h.bottom.free()
+	hazards = []
+	
+	player = preload("res://src/bord.tscn").instantiate()
+	player.position = player_pixel_position_default
+	player.died.connect(_on_player_died)
+	self.add_child(player)
+	
+	continue_moving = true
+
+
+func _on_player_died() -> void:
+	continue_moving = false
+	get_tree().create_timer(death_screen_time).timeout.connect(
+		func _on_death_screen_timeout():
+			respawn())
+
+
 func _ready() -> void:
 	high_score = load_high_score()
+	
+	respawn()
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_key_pressed(KEY_0):
-		distance += -scroll_speed * delta
-	else:
+	if continue_moving:
 		distance += scroll_speed * delta
 	
 	if distance > high_score:
