@@ -1,0 +1,14 @@
+* Flappy Penguin
+A Flappy Bird clone, made using Godot. It is game #1 for the [[https://20_games_challenge.gitlab.io/][20 Games Challenge]].
+
+It took about 9 hours of work, if I remember properly. The character is supposed
+to be the Learn To Fly penguin with a jet pack.
+
+[[./screenshot.png]]
+
+** Credit
+| Asset(s)      | Credit                                                  |
+|---------------+---------------------------------------------------------|
+| The font      | Kenney Pixel from https://kenney.nl/assets/kenney-fonts |
+| Volume icons  | https://kenney.nl/assets/game-icons                     |
+| Sound effects | Generated using https://sfxr.me/                        |
