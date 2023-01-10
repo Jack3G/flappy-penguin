@@ -1,5 +1,5 @@
 * Flappy Penguin
-A Flappy Bird clone, made using Godot. It is game #1 for the [[https://20_games_challenge.gitlab.io/][20 Games Challenge]].
+A Flappy Bird clone, made using Godot 4 (beta 10). It is game #1 for the [[https://20_games_challenge.gitlab.io/][20 Games Challenge]].
 
 It took about 9 hours of work, if I remember properly. The character is supposed
 to be the Learn To Fly penguin with a jet pack.
