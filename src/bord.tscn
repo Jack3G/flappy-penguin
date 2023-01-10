@@ -1,45 +1,46 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwxm8auvl2sbp"]
+[gd_scene load_steps=13 format=3 uid="uid://dwxm8auvl2sbp"]
 
 [ext_resource type="Texture2D" uid="uid://cw2525i8vgpxu" path="res://assets/penguino.png" id="1_3wjsv"]
 [ext_resource type="Script" path="res://src/bord.gd" id="1_fddyq"]
+[ext_resource type="AudioStream" uid="uid://bnyyrd6oht31r" path="res://assets/accept.wav" id="3_01p8s"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wxd4q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqt2y"]
 atlas = ExtResource("1_3wjsv")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f70um"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h8j3m"]
 atlas = ExtResource("1_3wjsv")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_knp74"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_7vuou"]
 animations = [{
-"frames": [SubResource("AtlasTexture_wxd4q"), SubResource("AtlasTexture_f70um")],
+"frames": [SubResource("AtlasTexture_uqt2y"), SubResource("AtlasTexture_h8j3m")],
 "loop": true,
 "name": &"default",
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tc3fi"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c34xv"]
 radius = 6.0
 height = 12.0
 
-[sub_resource type="Gradient" id="Gradient_6yso6"]
+[sub_resource type="Gradient" id="Gradient_gk0l6"]
 offsets = PackedFloat32Array(0.194805, 1)
 colors = PackedColorArray(0.95, 0.633333, 0, 1, 0.87, 0.16878, 0.0609, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ul4vt"]
-gradient = SubResource("Gradient_6yso6")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6x1in"]
+gradient = SubResource("Gradient_gk0l6")
 width = 8
 
-[sub_resource type="Gradient" id="Gradient_xexil"]
+[sub_resource type="Gradient" id="Gradient_5juox"]
 offsets = PackedFloat32Array(0.61039, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_avhi2"]
-gradient = SubResource("Gradient_xexil")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x2ual"]
+gradient = SubResource("Gradient_5juox")
 width = 8
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dd8yx"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vvb2l"]
 particle_flag_disable_z = true
 direction = Vector3(-1, 0, 0)
 spread = 15.0
@@ -48,23 +49,26 @@ initial_velocity_min = 50.0
 initial_velocity_max = 70.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-color_ramp = SubResource("GradientTexture1D_avhi2")
-color_initial_ramp = SubResource("GradientTexture1D_ul4vt")
+color_ramp = SubResource("GradientTexture1D_x2ual")
+color_initial_ramp = SubResource("GradientTexture1D_6x1in")
 
 [node name="Bord" type="CharacterBody2D"]
 script = ExtResource("1_fddyq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-frames = SubResource("SpriteFrames_knp74")
+frames = SubResource("SpriteFrames_7vuou")
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -1)
 rotation = 1.57079
-shape = SubResource("CapsuleShape2D_tc3fi")
+shape = SubResource("CapsuleShape2D_c34xv")
 
 [node name="JetpackParticles" type="GPUParticles2D" parent="."]
 position = Vector2(-5, -6)
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_dd8yx")
+process_material = SubResource("ParticleProcessMaterial_vvb2l")
 lifetime = 0.5
+
+[node name="FlapSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_01p8s")

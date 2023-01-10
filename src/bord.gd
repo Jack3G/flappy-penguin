@@ -16,6 +16,7 @@ var dead: bool = false
 var frozen: bool = true
 
 @onready var jetpack_particles: GPUParticles2D = $JetpackParticles
+@onready var flap_sound: AudioStreamPlayer = $FlapSound
 
 signal died
 signal unfrozen
@@ -29,6 +30,8 @@ func get_gravity() -> Vector2:
 func _physics_process(delta: float) -> void:
 	if not dead and Input.is_action_just_pressed("flap"):
 		velocity.y = -flap_strength
+		flap_sound.play()
+		
 		if frozen:
 			frozen = false
 			emit_signal("unfrozen")
