@@ -29,6 +29,7 @@ var distance: float = 0
 var high_score: float = high_score_default
 var player: Node2D
 var continue_moving: bool = false
+var passed_high_score: bool = false
 
 var hazards: Array[Hazard] = []
 var next_hazard_distance: float = randf_range(
@@ -40,6 +41,8 @@ const stalagmite: PackedScene = preload("res://src/hazards/stalagmite.tscn")
 @onready var distance_label: Label = %DistanceLabel
 @onready var high_score_label: Label = %HighScoreLabel
 @onready var cave_background: ParallaxBackground = $CaveBackground
+@onready var crash_sound: AudioStreamPlayer = $CrashSound
+@onready var badoop_sound: AudioStreamPlayer = $BadoopSound
 
 
 class Hazard:
@@ -119,6 +122,7 @@ func respawn() -> void:
 		player.queue_free()
 	
 	distance = 0
+	passed_high_score = false
 	for h in hazards:
 		h.top.free()
 		h.bottom.free()
@@ -135,6 +139,8 @@ func respawn() -> void:
 
 func _on_player_died() -> void:
 	continue_moving = false
+	crash_sound.play()
+	
 	get_tree().create_timer(death_screen_time).timeout.connect(
 		func _on_death_screen_timeout():
 			respawn())
@@ -159,6 +165,9 @@ func _physics_process(delta: float) -> void:
 	
 	if distance > high_score:
 		high_score = distance
+		if not passed_high_score:
+			passed_high_score = true
+			badoop_sound.play()
 	
 	distance_label.text = distance_label_prefix + str(roundi(distance))
 	high_score_label.text = high_score_label_prefix + str(roundi(high_score))

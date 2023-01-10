@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhdvdr6gf0tn8"]
+[gd_scene load_steps=8 format=3 uid="uid://bhdvdr6gf0tn8"]
 
 [ext_resource type="Script" path="res://src/game.gd" id="1_bid2k"]
 [ext_resource type="PackedScene" uid="uid://dklux7i1dt3xk" path="res://src/cave_background.tscn" id="2_sssgi"]
+[ext_resource type="AudioStream" uid="uid://dcbb3343m6cut" path="res://assets/explosion.wav" id="4_5baja"]
+[ext_resource type="AudioStream" uid="uid://by2sudlkm58eg" path="res://assets/badoop.wav" id="5_47ac6"]
 [ext_resource type="Theme" uid="uid://df18fg2eaif77" path="res://src/theme.tres" id="5_ybfte"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qvatg"]
@@ -49,3 +51,9 @@ layout_mode = 2
 text = "Distance: 1213"
 label_settings = SubResource("LabelSettings_gkj1t")
 vertical_alignment = 1
+
+[node name="CrashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_5baja")
+
+[node name="BadoopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_47ac6")
